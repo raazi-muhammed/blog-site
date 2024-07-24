@@ -1,8 +1,9 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { authRoutes } from "./routes/authRoutes.js";
+import { authRoutes } from "./routes/auth-routes.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
+import { blogRoutes } from "./routes/blog-routes.js";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(
     })
 );
 
+app.use("/blogs", blogRoutes);
 app.use(authRoutes);
 app.use(errorHandler);
 

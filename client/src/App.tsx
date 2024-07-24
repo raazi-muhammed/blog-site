@@ -3,12 +3,18 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import AuthLayout from "./components/layouts/AuthLayout";
 import HomeScreen from "./pages/homeScreen";
+import NavBarLayout from "./components/layouts/NavBarLayout";
 
 const router = createBrowserRouter([
     {
+        element: <NavBarLayout />,
         path: "/",
-        element: <HomeScreen />,
-        errorElement: <h1>Not found</h1>,
+        children: [
+            {
+                index: true,
+                element: <HomeScreen />,
+            },
+        ],
     },
     {
         path: "/",

@@ -14,6 +14,9 @@ import { z } from "zod";
 import Spinner from "../spinners/Spinner";
 import { BlogDto, blogSchema } from "@/dto/blogDto";
 import RichEditor from "../others/RichEditor";
+import { addBlog } from "@/services/BlogService";
+import { toast } from "../ui/use-toast";
+import { AxiosError } from "axios";
 
 const emptyDefault = { title: "", content: "" };
 
@@ -29,8 +32,19 @@ export function BlogForm({
     });
 
     async function onSubmit(values: BlogDto) {
-        console.log(values);
-        console.log("====================================");
+        try {
+            await addBlog(values);
+            toast({
+                description: "Blog created",
+            });
+        } catch (error) {
+            let errorMessage = "Blog adding failed";
+            if (error instanceof AxiosError)
+                errorMessage = error.response?.data.errors[0].message;
+            toast({
+                description: errorMessage,
+            });
+        }
     }
     return (
         <Form {...form}>

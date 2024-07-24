@@ -21,13 +21,24 @@ interface IUserMethods {
 type UserModel = Model<IUser, {}, IUserMethods>;
 
 // And a schema that knows about IUserMethods
-const userSchema = new Schema<IUser, UserModel, IUserMethods>({
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    isVerified: { type: Boolean, default: false },
-    password: { type: String, required: true },
-    avatar: { type: String },
-});
+const userSchema = new Schema<IUser, UserModel, IUserMethods>(
+    {
+        name: { type: String, required: true },
+        email: { type: String, required: true, unique: true },
+        isVerified: { type: Boolean, default: false },
+        password: { type: String, required: true },
+        avatar: { type: String },
+    },
+    {
+        timestamps: true,
+        toJSON: {
+            transform(doc, ret) {
+                ret.id = ret._id;
+                delete ret._id;
+            },
+        },
+    }
+);
 
 userSchema.pre("save", async function (next) {
     if (!this.isModified("password")) {
