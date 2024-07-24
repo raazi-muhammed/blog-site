@@ -1,4 +1,4 @@
-import { LoginForm } from "@/components/forms/LoginForm";
+import { RegisterForm } from "@/components/forms/RegisterForm";
 import {
     Card,
     CardContent,
@@ -8,23 +8,23 @@ import {
 } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 
-export default function Login() {
+export default function Register() {
     return (
         <Card className="w-full max-w-md">
             <CardHeader>
-                <CardTitle>Login</CardTitle>
+                <CardTitle>Register</CardTitle>
             </CardHeader>
             <CardContent>
-                <LoginForm />
+                <RegisterForm />
             </CardContent>
             <CardFooter>
                 <p className="text-center mx-auto text-sm">
-                    Don't have an account?
+                    Already have an account?
                     <span>
                         <Link
-                            to="/register"
+                            to="/login"
                             className="ms-1 hover:underline decoration text-primary font-semibold">
-                            Register
+                            Login
                         </Link>
                     </span>
                 </p>

@@ -1,5 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/login";
+import Register from "./pages/register";
+import AuthLayout from "./components/layouts/AuthLayout";
 
 const router = createBrowserRouter([
     {
@@ -8,8 +10,18 @@ const router = createBrowserRouter([
         errorElement: <h1>Not found</h1>,
     },
     {
-        path: "/login",
-        element: <Login />,
+        path: "/",
+        element: <AuthLayout />,
+        children: [
+            {
+                path: "/login",
+                element: <Login />,
+            },
+            {
+                path: "/register",
+                element: <Register />,
+            },
+        ],
     },
 ]);
 
