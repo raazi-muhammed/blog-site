@@ -17,6 +17,10 @@ import {
     EyeOff as HidePasswordIcon,
 } from "lucide-react";
 import { useState } from "react";
+import { loginUser } from "@/services/AuthService";
+import { toast } from "../ui/use-toast";
+import { AxiosError } from "axios";
+import Spinner from "../spinners/Spinner";
 
 const emptyDefault = { email: "", password: "" };
 
@@ -33,8 +37,20 @@ export function LoginForm({
         mode: "onTouched",
     });
 
-    function onSubmit(values: LoginDto) {
-        console.log(values);
+    async function onSubmit(values: LoginDto) {
+        try {
+            await loginUser(values);
+            toast({
+                description: "You are logged in",
+            });
+        } catch (error) {
+            let errorMessage = "Login failed";
+            if (error instanceof AxiosError)
+                errorMessage = error.response?.data.errors[0].message;
+            toast({
+                description: errorMessage,
+            });
+        }
     }
     return (
         <Form {...form}>
@@ -83,8 +99,12 @@ export function LoginForm({
                     )}
                 />
 
-                <Button type="submit" className="w-full">
-                    Submit
+                <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={form.formState.isSubmitting}>
+                    <Spinner isLoading={form.formState.isSubmitting} />
+                    Login
                 </Button>
             </form>
         </Form>

@@ -17,6 +17,10 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { RegisterDto, registerSchema } from "@/dto/registerDto";
+import { registerUser } from "@/services/AuthService";
+import { toast } from "../ui/use-toast";
+import { AxiosError } from "axios";
+import Spinner from "../spinners/Spinner";
 
 const emptyDefault = { name: "", email: "", password: "" };
 
@@ -33,8 +37,20 @@ export function RegisterForm({
         mode: "onTouched",
     });
 
-    function onSubmit(values: RegisterDto) {
-        console.log(values);
+    async function onSubmit(values: RegisterDto) {
+        try {
+            await registerUser(values);
+            toast({
+                description: "Account Created",
+            });
+        } catch (error) {
+            let errorMessage = "Account Created Failed";
+            if (error instanceof AxiosError)
+                errorMessage = error.response?.data.errors[0].message;
+            toast({
+                description: errorMessage,
+            });
+        }
     }
     return (
         <Form {...form}>
@@ -95,9 +111,12 @@ export function RegisterForm({
                         </FormItem>
                     )}
                 />
-
-                <Button type="submit" className="w-full">
-                    Submit
+                <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={form.formState.isSubmitting}>
+                    <Spinner isLoading={form.formState.isSubmitting} />
+                    Register
                 </Button>
             </form>
         </Form>
