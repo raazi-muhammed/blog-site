@@ -1,11 +1,18 @@
-import { Button } from "@/components/ui/button";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Login from "./pages/login";
 
-function App() {
-    return (
-        <main>
-            <Button>Button</Button>
-        </main>
-    );
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <div>Hello world!</div>,
+        errorElement: <h1>Not found</h1>,
+    },
+    {
+        path: "/login",
+        element: <Login />,
+    },
+]);
+
+export default function App() {
+    return <RouterProvider router={router} />;
 }
-
-export default App;
