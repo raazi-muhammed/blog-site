@@ -2,11 +2,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import AuthLayout from "./components/layouts/AuthLayout";
+import HomeScreen from "./pages/homeScreen";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <div>Hello world!</div>,
+        element: <HomeScreen />,
         errorElement: <h1>Not found</h1>,
     },
     {
