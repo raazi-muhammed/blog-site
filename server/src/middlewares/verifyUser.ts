@@ -7,7 +7,7 @@ import User, { IUser } from "../models/user-model.js";
 declare global {
     namespace Express {
         export interface Request {
-            user?: IUser;
+            user?: IUser & { id: string };
         }
     }
 }
@@ -30,6 +30,7 @@ export async function verifyUser(
         const user = await User.findOne({ _id: decodedTokenData.sub });
         if (!user) throw new NotFoundError("User not found");
 
+        //@ts-ignore
         req.user = user ? user : undefined;
 
         next();

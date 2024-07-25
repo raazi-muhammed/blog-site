@@ -4,6 +4,7 @@ interface IUser {
     title: string;
     content: string;
     description: string;
+    deletedAt?: Date;
     cover?: string;
     writtenBy: ObjectId;
     id: string;
@@ -21,6 +22,7 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
         title: { type: String, required: true },
         content: { type: String, required: true },
         description: { type: String, required: true },
+        deletedAt: { type: Date },
         cover: { type: String },
         writtenBy: {
             type: mongoose.Schema.Types.ObjectId,

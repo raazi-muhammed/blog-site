@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -14,16 +14,15 @@ import { z } from "zod";
 import Spinner from "../spinners/Spinner";
 import { BlogDto, blogSchema } from "@/dto/blogDto";
 import RichEditor from "../others/RichEditor";
-import { addBlog } from "@/services/BlogService";
-import { toast } from "../ui/use-toast";
-import { AxiosError } from "axios";
 
 const emptyDefault = { title: "", content: "", description: "", cover: "" };
 
 export function BlogForm({
     defaultValues = emptyDefault,
+    onSubmit,
 }: {
     defaultValues?: BlogDto;
+    onSubmit: SubmitHandler<BlogDto>;
 }) {
     const form = useForm<z.infer<typeof blogSchema>>({
         resolver: zodResolver(blogSchema),
@@ -31,30 +30,6 @@ export function BlogForm({
         mode: "onTouched",
     });
 
-    async function onSubmit(values: BlogDto) {
-        const data = new FormData();
-        data.append("title", values.title);
-        data.append("description", values.description);
-        data.append("content", values.content);
-
-        if (values.cover) {
-            data.append("cover", values.cover[0]);
-        }
-
-        try {
-            await addBlog(data);
-            toast({
-                description: "Blog created",
-            });
-        } catch (error) {
-            let errorMessage = "Blog adding failed";
-            if (error instanceof AxiosError)
-                errorMessage = error.response?.data.errors[0].message;
-            toast({
-                description: errorMessage,
-            });
-        }
-    }
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
@@ -109,7 +84,7 @@ export function BlogForm({
                             <FormLabel>Rich Editor</FormLabel>
                             <FormControl>
                                 <RichEditor
-                                    description={field.name}
+                                    description={field.value}
                                     onChange={field.onChange}
                                 />
                             </FormControl>
