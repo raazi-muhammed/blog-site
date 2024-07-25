@@ -1,21 +1,20 @@
-import { useEffect, useState } from "react";
 import { getBlogs } from "@/services/BlogService";
 import { Blog } from "@/types/entities";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { SERVER_URL } from "@/constants/server";
 import { Link } from "react-router-dom";
+import { useQuery } from "@/hooks/useQuery";
+import Spinner from "@/components/spinners/Spinner";
 
 export default function HomeScreen() {
-    const [blogs, setBlogs] = useState<Blog[]>([]);
-
-    useEffect(() => {
-        getBlogs().then((res) => {
-            setBlogs(res.data.data);
-        });
-    }, []);
+    const { data: blogs, loading } = useQuery<Blog[]>({
+        service: () => getBlogs(),
+        initial: [],
+    });
 
     return (
         <main className="container">
+            <Spinner type="normal" isLoading={loading} />
             {blogs.map((blog) => (
                 <Link to={`/blogs/${blog.id}`}>
                     <Card

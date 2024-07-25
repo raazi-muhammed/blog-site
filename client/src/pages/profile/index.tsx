@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { getProfile } from "@/services/UserService";
 import { User } from "@/types/entities";
-import { useEffect, useState } from "react";
 import {
     Dialog,
     DialogContent,
@@ -32,17 +31,17 @@ import { logout } from "@/store/features/authSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { userTokenName } from "@/constants/tokens";
+import { useQuery } from "@/hooks/useQuery";
+import Spinner from "@/components/spinners/Spinner";
 
 export default function Profile() {
-    const [user, setUser] = useState<User | null>(null);
+    const { data: user, loading } = useQuery<User | null>({
+        service: () => getProfile(),
+        initial: null,
+    });
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        getProfile().then((res) => {
-            setUser(res.data.data);
-        });
-    }, []);
 
     function handleLogOut() {
         document.cookie = `${userTokenName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
@@ -53,6 +52,7 @@ export default function Profile() {
     return (
         <main className="container">
             <header className="flex justify-between">
+                <Spinner isLoading={loading} />
                 <div className="flex gap-2 align-middle">
                     <Avatar className="size-16">
                         <AvatarImage

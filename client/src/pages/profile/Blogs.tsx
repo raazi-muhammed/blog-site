@@ -17,7 +17,6 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { BlogForm } from "@/components/forms/BlogForm";
-import { useEffect, useState } from "react";
 import { Blog } from "@/types/entities";
 import { getUserBlogs } from "@/services/BlogService";
 import { deleteBlog, editBlog } from "@/services/BlogService";
@@ -33,15 +32,14 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { useQuery } from "@/hooks/useQuery";
+import Spinner from "@/components/spinners/Spinner";
 
 export default function Blogs() {
-    const [blogs, setBlogs] = useState<Blog[]>([]);
-
-    useEffect(() => {
-        getUserBlogs().then((res) => {
-            setBlogs(res.data.data);
-        });
-    }, []);
+    const { data: blogs, loading } = useQuery<Blog[]>({
+        service: () => getUserBlogs(),
+        initial: [],
+    });
 
     function onSubmitCreator(id: string) {
         return async function onSubmit(values: BlogDto) {
@@ -80,6 +78,7 @@ export default function Blogs() {
     return (
         <section>
             <h3 className="my-2 text-2xl font-bold">My blogs</h3>
+            <Spinner isLoading={loading} />
             {blogs.map((blog) => (
                 <Card className="mb-4 flex justify-between">
                     <div>
