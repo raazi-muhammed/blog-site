@@ -12,6 +12,7 @@ import { toast } from "@/components/ui/use-toast";
 import { BlogDto } from "@/dto/blogDto";
 import { addBlog } from "@/services/BlogService";
 import { AxiosError } from "axios";
+import { CopyPlus as CreateIcon } from "lucide-react";
 
 export default function AddBlog() {
     async function onSubmit(values: BlogDto) {
@@ -20,9 +21,9 @@ export default function AddBlog() {
         data.append("description", values.description);
         data.append("content", values.content);
 
-        if (values.cover) {
-            data.append("cover", values.cover[0]);
-        }
+        if (!values.cover) return toast({ description: "Add a cover image" });
+
+        data.append("cover", values.cover[0]);
 
         try {
             await addBlog(data);
@@ -42,7 +43,10 @@ export default function AddBlog() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button> Create new</Button>
+                <Button>
+                    <CreateIcon className="me-2 size-4" />
+                    Create new
+                </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

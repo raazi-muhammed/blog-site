@@ -1,3 +1,4 @@
+import { Separator } from "@/components/ui/separator";
 import { SERVER_URL } from "@/constants/server";
 import { getBlog } from "@/services/BlogService";
 import { Blog } from "@/types/entities";
@@ -24,7 +25,10 @@ export default function BlogContent() {
                         alt=""
                     />
                     <section className="container mt-8">
-                        <h3 className="text-5xl font-bold">{blog.title}</h3>
+                        <h3 className="font-display text-5xl font-bold">
+                            {blog.title}
+                        </h3>
+                        <Separator className="my-4" />
                         <div
                             className="min-h-[50vh]"
                             dangerouslySetInnerHTML={{
@@ -34,7 +38,9 @@ export default function BlogContent() {
                     <section className="mt-12 border bg-card py-8">
                         <div className="container">
                             <p>Written by</p>
-                            <p>{blog.writtenBy.name}</p>
+                            <p className="font-display text-2xl">
+                                {blog.writtenBy.name}
+                            </p>
                         </div>
                     </section>
                 </>

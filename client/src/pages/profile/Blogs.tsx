@@ -34,6 +34,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@/hooks/useQuery";
 import Spinner from "@/components/spinners/Spinner";
+import { Pencil as EditIcon, Trash2 as DeleteIcon } from "lucide-react";
+import { SERVER_URL } from "@/constants/server";
 
 export default function Blogs() {
     const { data: blogs, loading } = useQuery<Blog[]>({
@@ -77,22 +79,31 @@ export default function Blogs() {
 
     return (
         <section>
-            <h3 className="my-2 text-2xl font-bold">My blogs</h3>
+            <CardTitle className="my-4 text-primary">My blogs</CardTitle>
             <Spinner isLoading={loading} />
             {blogs.map((blog) => (
-                <Card className="mb-4 flex justify-between">
-                    <div>
-                        <CardHeader>
-                            <CardTitle>{blog.title}</CardTitle>
-                        </CardHeader>
-                        <CardContent className="-mt-2">
-                            <p>{blog.description}</p>
-                        </CardContent>
-                    </div>
-                    <CardFooter className="mt-auto flex gap-2">
+                <Card className="mb-4 flex flex-col gap-6 border p-6 shadow-none md:flex-row">
+                    <CardHeader className="flex-shrink-0 p-0">
+                        <img
+                            className="aspect-square w-32 rounded border object-cover shadow"
+                            src={`${SERVER_URL}/public/${blog.cover}`}
+                            alt=""
+                        />
+                    </CardHeader>
+                    <CardContent className="my-auto p-0">
+                        <CardTitle className="text-xl">{blog.title}</CardTitle>
+                        <p>{blog.description}</p>
+                    </CardContent>
+                    <CardFooter className="my-auto ms-auto grid grid-cols-2 gap-2 p-0 md:grid-cols-1">
                         <Dialog>
                             <DialogTrigger asChild>
-                                <Button>Edit</Button>
+                                <Button
+                                    size="sm"
+                                    variant="outline"
+                                    className="border-primary text-primary">
+                                    <EditIcon className="me-2 size-4" />
+                                    Edit
+                                </Button>
                             </DialogTrigger>
                             <DialogContent>
                                 <DialogHeader>
@@ -108,7 +119,13 @@ export default function Blogs() {
                         </Dialog>
                         <AlertDialog>
                             <AlertDialogTrigger asChild>
-                                <Button variant="destructive">Delete</Button>
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    className="border-destructive text-destructive">
+                                    <DeleteIcon className="me-2 size-4" />
+                                    Delete
+                                </Button>
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                                 <AlertDialogHeader>

@@ -24,7 +24,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-
+import { Pencil as EditIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import Blogs from "./Blogs";
 import { logout } from "@/store/features/authSlice";
@@ -33,6 +33,7 @@ import { useNavigate } from "react-router-dom";
 import { userTokenName } from "@/constants/tokens";
 import { useQuery } from "@/hooks/useQuery";
 import Spinner from "@/components/spinners/Spinner";
+import { LogOutIcon } from "lucide-react";
 
 export default function Profile() {
     const { data: user, loading } = useQuery<User | null>({
@@ -51,7 +52,7 @@ export default function Profile() {
 
     return (
         <main className="container">
-            <header className="flex justify-between">
+            <header className="flex flex-col justify-between gap-6 md:flex-row">
                 <Spinner isLoading={loading} />
                 <div className="flex gap-2 align-middle">
                     <Avatar className="size-16">
@@ -70,7 +71,10 @@ export default function Profile() {
                 <div className="flex gap-4">
                     <Dialog>
                         <DialogTrigger asChild>
-                            <Button variant="outline">Edit</Button>
+                            <Button variant="outline">
+                                <EditIcon className="me-2 size-4" />
+                                Edit
+                            </Button>
                         </DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
@@ -85,7 +89,10 @@ export default function Profile() {
                     </Dialog>
                     <AlertDialog>
                         <AlertDialogTrigger asChild>
-                            <Button variant="destructive">Log out</Button>
+                            <Button variant="destructive">
+                                <LogOutIcon className="me-2 size-4" />
+                                Log out
+                            </Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                             <AlertDialogHeader>

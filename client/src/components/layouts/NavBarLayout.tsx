@@ -12,8 +12,8 @@ export default function NavBarLayout() {
         <>
             <header className="sticky top-0 mb-6 bg-accent py-4 shadow">
                 <div className="container flex justify-between">
-                    <Link to="/">
-                        <p className="mb-0 mt-auto text-3xl font-bold">
+                    <Link to="/" className="mt-auto">
+                        <p className="mb-0 mt-auto font-display text-3xl font-bold">
                             Blogs
                         </p>
                     </Link>

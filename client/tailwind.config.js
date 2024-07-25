@@ -1,3 +1,5 @@
+const { DEFAULT_CIPHERS } = require("tls");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     darkMode: ["class"],
@@ -16,7 +18,6 @@ module.exports = {
                 "2xl": "1400px",
             },
         },
-
         extend: {
             colors: {
                 border: "hsl(var(--border))",
@@ -27,6 +28,7 @@ module.exports = {
                 primary: {
                     DEFAULT: "hsl(var(--primary))",
                     foreground: "hsl(var(--primary-foreground))",
+                    border: "hsl(var(--primary-border))",
                 },
                 secondary: {
                     DEFAULT: "hsl(var(--secondary))",
@@ -59,6 +61,9 @@ module.exports = {
                 md: "calc(var(--radius) - 2px)",
                 sm: "calc(var(--radius) - 4px)",
             },
+            borderWidth: {
+                DEFAULT: "2px",
+            },
             keyframes: {
                 "accordion-down": {
                     from: { height: "0" },
@@ -78,6 +83,9 @@ module.exports = {
             },
             textDecorationThickness: {
                 DEFAULT: "2px",
+            },
+            fontFamily: {
+                display: ["DM Serif Display", "serif"],
             },
         },
     },
