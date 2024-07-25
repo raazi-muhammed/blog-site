@@ -1,6 +1,7 @@
 import { getProfile } from "@/services/UserService";
 import { User } from "@/types/entities";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { stat } from "fs";
 
 export const fetchCurrentUser = createAsyncThunk(
     "authReducer/userData/fetchCurrentUser",
@@ -46,6 +47,8 @@ export const auth = createSlice({
             })
             .addCase(fetchCurrentUser.rejected, (state) => {
                 state.isLoading = false;
+                state.isAuth = false;
+                state.userData = null;
             });
     },
 });

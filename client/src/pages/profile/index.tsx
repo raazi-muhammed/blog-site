@@ -14,18 +14,41 @@ import { UserProfileForm } from "@/components/forms/UserProfileForm";
 import { SERVER_URL } from "@/constants/server";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { generateFallbackAvatar } from "@/lib/utils";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 import { Separator } from "@/components/ui/separator";
 import Blogs from "./Blogs";
+import { logout } from "@/store/features/authSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { userTokenName } from "@/constants/tokens";
 
 export default function Profile() {
     const [user, setUser] = useState<User | null>(null);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         getProfile().then((res) => {
             setUser(res.data.data);
         });
     }, []);
+
+    function handleLogOut() {
+        document.cookie = `${userTokenName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        dispatch(logout());
+        navigate("/login");
+    }
 
     return (
         <main className="container">
@@ -44,21 +67,46 @@ export default function Profile() {
                         <p>{user?.email}</p>
                     </div>
                 </div>
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <Button variant="outline">Edit</Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                        <DialogHeader>
-                            <DialogTitle>Edit Profile</DialogTitle>
-                            <DialogDescription>
-                                <UserProfileForm
-                                    defaultValues={user || undefined}
-                                />
-                            </DialogDescription>
-                        </DialogHeader>
-                    </DialogContent>
-                </Dialog>
+                <div className="flex gap-4">
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button variant="outline">Edit</Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>Edit Profile</DialogTitle>
+                                <DialogDescription>
+                                    <UserProfileForm
+                                        defaultValues={user || undefined}
+                                    />
+                                </DialogDescription>
+                            </DialogHeader>
+                        </DialogContent>
+                    </Dialog>
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button variant="destructive">Log out</Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                    Are you absolutely sure?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action cannot be undone. This will
+                                    permanently delete your account and remove
+                                    your data from our servers.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction onClick={handleLogOut}>
+                                    Delete
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                </div>
             </header>
             <Separator className="my-4" />
             <Blogs />

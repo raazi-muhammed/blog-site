@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/store";
 import { Outlet, useNavigate } from "react-router-dom";
 
-export default function AuthLayout() {
+export default function ProtectedLayout() {
     const { isAuth, isLoading } = useAppSelector((state) => state.authReducer);
     const navigate = useNavigate();
 
@@ -9,13 +9,10 @@ export default function AuthLayout() {
         return <p>Loading</p>;
     }
 
-    if (isAuth) {
-        navigate("/");
+    if (!isAuth) {
+        navigate("/login");
+        return <p>No auth</p>;
     }
 
-    return (
-        <main className="container grid min-h-screen place-items-center">
-            <Outlet />
-        </main>
-    );
+    return <Outlet />;
 }

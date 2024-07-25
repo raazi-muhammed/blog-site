@@ -7,6 +7,7 @@ import NavBarLayout from "./components/layouts/NavBarLayout";
 import Profile from "./pages/profile";
 import "./lib/interseptor";
 import BlogContent from "./pages/blogContent";
+import ProtectedLayout from "./components/layouts/ProtectedLayout";
 
 const router = createBrowserRouter([
     {
@@ -23,7 +24,13 @@ const router = createBrowserRouter([
             },
             {
                 path: "/profile",
-                element: <Profile />,
+                element: <ProtectedLayout />,
+                children: [
+                    {
+                        index: true,
+                        element: <Profile />,
+                    },
+                ],
             },
         ],
     },
