@@ -6,9 +6,9 @@ interface ICode {
     code: number;
 }
 
-type UserModel = Model<ICode, {}>;
+type CodeModel = Model<ICode, {}>;
 
-const codeSchema = new Schema<ICode, UserModel>(
+const codeSchema = new Schema<ICode, CodeModel>(
     {
         code: { type: Number, required: true },
         user: {
@@ -33,7 +33,7 @@ const codeSchema = new Schema<ICode, UserModel>(
     }
 );
 
-const VerificationCode = model<ICode, UserModel>(
+const VerificationCode = model<ICode, CodeModel>(
     "VerificationCode",
     codeSchema
 );

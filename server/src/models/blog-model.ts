@@ -1,6 +1,6 @@
 import mongoose, { Model, ObjectId, Schema, model } from "mongoose";
 
-interface IUser {
+interface IBlog {
     title: string;
     content: string;
     description: string;
@@ -10,14 +10,14 @@ interface IUser {
     id: string;
 }
 
-interface IUserMethods {
+interface IBlogMethods {
     getJwtToken: () => string;
     comparePassword: (enteredPassword: string) => Promise<boolean>;
 }
 
-type UserModel = Model<IUser, {}, IUserMethods>;
+type BlogModel = Model<IBlog, {}, IBlogMethods>;
 
-const userSchema = new Schema<IUser, UserModel, IUserMethods>(
+const userSchema = new Schema<IBlog, BlogModel, IBlogMethods>(
     {
         title: { type: String, required: true },
         content: { type: String, required: true },
@@ -41,5 +41,5 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
     }
 );
 
-const Blog = model<IUser, UserModel>("Blog", userSchema);
+const Blog = model<IBlog, BlogModel>("Blog", userSchema);
 export default Blog;

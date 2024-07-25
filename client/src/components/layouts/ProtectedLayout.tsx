@@ -12,7 +12,6 @@ export default function ProtectedLayout() {
 
     if (!isAuth) {
         navigate("/login");
-        return <p>No auth</p>;
     }
 
     return <Outlet />;

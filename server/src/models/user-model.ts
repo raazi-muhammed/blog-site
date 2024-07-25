@@ -11,16 +11,13 @@ export interface IUser {
     avatar?: string;
 }
 
-// Put all user instance methods in this interface:
 interface IUserMethods {
     getJwtToken: () => string;
     comparePassword: (enteredPassword: string) => Promise<boolean>;
 }
 
-// Create a new Model type that knows about IUserMethods...
 type UserModel = Model<IUser, {}, IUserMethods>;
 
-// And a schema that knows about IUserMethods
 const userSchema = new Schema<IUser, UserModel, IUserMethods>(
     {
         name: { type: String, required: true },
