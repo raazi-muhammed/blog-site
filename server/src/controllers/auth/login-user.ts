@@ -17,6 +17,8 @@ export const loginUser = asyncErrorHandler(async (req, res) => {
     const isPasswordCorrect = await user.comparePassword(userInput.password);
     if (!isPasswordCorrect) throw new UnauthorizedError("Password incorrect");
 
+    if (!user.isVerified) throw new UnauthorizedError("Account not verified");
+
     const token = user.getJwtToken();
 
     return res

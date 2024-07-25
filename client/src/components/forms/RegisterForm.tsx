@@ -21,6 +21,7 @@ import { registerUser } from "@/services/AuthService";
 import { toast } from "../ui/use-toast";
 import { AxiosError } from "axios";
 import Spinner from "../spinners/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const emptyDefault = { name: "", email: "", password: "" };
 
@@ -30,7 +31,7 @@ export function RegisterForm({
     defaultValues?: RegisterDto;
 }) {
     const [showPassword, setShowPassword] = useState(false);
-
+    const navigate = useNavigate();
     const form = useForm<z.infer<typeof registerSchema>>({
         resolver: zodResolver(registerSchema),
         defaultValues,
@@ -41,8 +42,10 @@ export function RegisterForm({
         try {
             await registerUser(values);
             toast({
-                description: "Account Created",
+                title: "Verication needed",
+                description: "Enter code to verify",
             });
+            navigate(`/verify-user?email=${values.email}`);
         } catch (error) {
             let errorMessage = "Account Created Failed";
             if (error instanceof AxiosError)

@@ -8,6 +8,7 @@ import Profile from "./pages/profile";
 import "./lib/interseptor";
 import BlogContent from "./pages/blogContent";
 import ProtectedLayout from "./components/layouts/ProtectedLayout";
+import VerifyUser from "./pages/verifyUser";
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             {
                 path: "/register",
                 element: <Register />,
+            },
+            {
+                path: "/verify-user",
+                element: <VerifyUser />,
             },
         ],
     },

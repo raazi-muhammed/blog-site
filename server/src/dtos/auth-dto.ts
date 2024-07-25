@@ -11,6 +11,10 @@ export const registerSchema = [
     body("password").isLength({ min: 7 }),
 ];
 
+export const verificationSchema = [
+    body("code").isLength({ min: 6, max: 6 }).isNumeric(),
+];
+
 export type RegisterDto = {
     name: string;
     email: string;
@@ -19,4 +23,8 @@ export type RegisterDto = {
 export type LoginDto = {
     email: string;
     password: string;
+};
+export type VerificationDto = {
+    email: string;
+    code: number;
 };
