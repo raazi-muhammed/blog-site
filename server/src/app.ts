@@ -5,17 +5,12 @@ import { authRoutes } from "./routes/auth-routes.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { blogRoutes } from "./routes/blog-routes.js";
 import { userRoutes } from "./routes/user-routes.js";
-import path from "path";
-import { fileURLToPath } from "url";
-const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-const __dirname = path.dirname(__filename); // get the name of the directory
 
 dotenv.config();
-
 const app: Express = express();
 
 const corsOptions = {
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL,
     credentials: true,
     optionSuccessStatus: 200,
 };
