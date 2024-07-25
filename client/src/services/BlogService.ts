@@ -1,5 +1,4 @@
 import { SERVER_URL } from "@/constants/server";
-import { BlogDto } from "@/dto/blogDto";
 import axios from "axios";
 
 export async function getBlogs() {
@@ -8,7 +7,13 @@ export async function getBlogs() {
     });
 }
 
-export async function addBlog(values: BlogDto) {
+export async function getBlog(id: string) {
+    return await axios.get(`${SERVER_URL}/blogs/${id}`, {
+        withCredentials: true,
+    });
+}
+
+export async function addBlog(values: FormData) {
     return await axios.post(`${SERVER_URL}/blogs`, values, {
         withCredentials: true,
     });

@@ -29,7 +29,6 @@ export function UserProfileForm({
     });
 
     async function onSubmit(values: UserDto) {
-        console.log(values);
         const data = new FormData();
         data.append("name", values.name);
         if (values.avatar) {

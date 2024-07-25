@@ -40,7 +40,6 @@ export default function Profile() {
                         <p>{user?.email}</p>
                     </div>
                 </div>
-
                 <Dialog>
                     <DialogTrigger asChild>
                         <Button variant="outline">Edit</Button>

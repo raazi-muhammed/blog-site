@@ -1,11 +1,13 @@
-import { body } from "express-validator";
+import { body, check } from "express-validator";
 
 export const blogSchema = [
-    body("title").isLength({ min: 3 }),
-    body("content").isLength({ min: 10 }),
+    check("title").isLength({ min: 3 }),
+    check("content").isLength({ min: 10 }),
 ];
 
 export type BlogDto = {
     title: string;
     content: string;
+    description: string;
+    cover?: string;
 };

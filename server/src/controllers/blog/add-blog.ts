@@ -12,6 +12,8 @@ export const addBlog = asyncErrorHandler(async (req, res) => {
     await Blog.create({
         title: input.title,
         content: input.content,
+        description: input.description,
+        cover: req.file?.filename,
         writtenBy: user?.id,
     });
 

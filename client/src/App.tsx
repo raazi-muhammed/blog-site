@@ -6,6 +6,7 @@ import HomeScreen from "./pages/homeScreen";
 import NavBarLayout from "./components/layouts/NavBarLayout";
 import Profile from "./pages/profile/Profile";
 import "./lib/interseptor";
+import BlogContent from "./pages/blogContent";
 
 const router = createBrowserRouter([
     {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <HomeScreen />,
+            },
+            {
+                path: "/blogs/:id",
+                element: <BlogContent />,
             },
             {
                 path: "/profile",

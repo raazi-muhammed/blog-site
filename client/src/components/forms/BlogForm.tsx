@@ -18,7 +18,7 @@ import { addBlog } from "@/services/BlogService";
 import { toast } from "../ui/use-toast";
 import { AxiosError } from "axios";
 
-const emptyDefault = { title: "", content: "" };
+const emptyDefault = { title: "", content: "", description: "", cover: "" };
 
 export function BlogForm({
     defaultValues = emptyDefault,
@@ -32,8 +32,17 @@ export function BlogForm({
     });
 
     async function onSubmit(values: BlogDto) {
+        const data = new FormData();
+        data.append("title", values.title);
+        data.append("description", values.description);
+        data.append("content", values.content);
+
+        if (values.cover) {
+            data.append("cover", values.cover[0]);
+        }
+
         try {
-            await addBlog(values);
+            await addBlog(data);
             toast({
                 description: "Blog created",
             });
@@ -64,6 +73,36 @@ export function BlogForm({
                 />
                 <FormField
                     control={form.control}
+                    name="cover"
+                    render={({}) => (
+                        <FormItem>
+                            <FormLabel>Cover</FormLabel>
+                            <FormControl>
+                                <Input
+                                    {...form.register("cover")}
+                                    type="file"
+                                    accept="images/*"
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Description</FormLabel>
+                            <FormControl>
+                                <Input placeholder="description" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
                     name="content"
                     render={({ field }) => (
                         <FormItem className="relative">
@@ -83,7 +122,7 @@ export function BlogForm({
                     className="w-full"
                     disabled={form.formState.isSubmitting}>
                     <Spinner isLoading={form.formState.isSubmitting} />
-                    Login
+                    Post Blog
                 </Button>
             </form>
         </Form>
