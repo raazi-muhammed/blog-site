@@ -4,6 +4,11 @@ import cors from "cors";
 import { authRoutes } from "./routes/auth-routes.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { blogRoutes } from "./routes/blog-routes.js";
+import { userRoutes } from "./routes/user-routes.js";
+import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename); // get the name of the directory
 
 dotenv.config();
 
@@ -16,12 +21,15 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+app.use("/public", express.static("./public"));
 app.use(
     express.json({
         limit: "50mb",
     })
 );
 
+app.use("/users", userRoutes);
 app.use("/blogs", blogRoutes);
 app.use(authRoutes);
 app.use(errorHandler);

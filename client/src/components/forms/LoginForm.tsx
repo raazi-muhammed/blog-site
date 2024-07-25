@@ -21,6 +21,7 @@ import { loginUser } from "@/services/AuthService";
 import { toast } from "../ui/use-toast";
 import { AxiosError } from "axios";
 import Spinner from "../spinners/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const emptyDefault = { email: "", password: "" };
 
@@ -30,6 +31,7 @@ export function LoginForm({
     defaultValues?: LoginDto;
 }) {
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -40,6 +42,7 @@ export function LoginForm({
     async function onSubmit(values: LoginDto) {
         try {
             await loginUser(values);
+            navigate("/");
             toast({
                 description: "You are logged in",
             });

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import AddBlog from "../addBlog";
 import { getBlogs } from "@/services/BlogService";
 import { Blog } from "@/types/entities";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,7 +10,7 @@ export default function HomeScreen() {
         getBlogs().then((res) => {
             setBlogs(res.data.data);
         });
-    });
+    }, []);
 
     return (
         <main className="container">

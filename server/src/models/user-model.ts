@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET_KEY } from "../config/constants.js";
 
-interface IUser {
+export interface IUser {
     email: string;
     name: string;
     password: string;

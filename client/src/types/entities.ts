@@ -3,3 +3,8 @@ export type Blog = {
     title: string;
     content: string;
 };
+export type User = {
+    name: string;
+    avatar?: string;
+    email: string;
+};
