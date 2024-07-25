@@ -4,7 +4,7 @@ import Register from "./pages/register";
 import AuthLayout from "./components/layouts/AuthLayout";
 import HomeScreen from "./pages/homeScreen";
 import NavBarLayout from "./components/layouts/NavBarLayout";
-import Profile from "./pages/profile/Profile";
+import Profile from "./pages/profile";
 import "./lib/interseptor";
 import BlogContent from "./pages/blogContent";
 
